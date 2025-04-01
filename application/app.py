@@ -1,15 +1,12 @@
-import os
 import redis
 from flask import Flask
 
+from infrastructure import RedisDb, UrlRedisHandler
+
 app = Flask(__name__)
 
-redis_host = os.getenv("REDIS_HOST", "redis")
-redis_client = redis.StrictRedis(
-    host=redis_host,
-    port=6379,
-    decode_responses=True
-)
+redis_client = RedisDb().client
+url_db_handler = UrlRedisHandler(redis_client)
 
 @app.route('/')
 def hello_world():

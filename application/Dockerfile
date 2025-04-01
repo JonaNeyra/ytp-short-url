@@ -5,6 +5,7 @@ LABEL maintainer="neyranievesjonathan@gmail.com"
 WORKDIR /application
 COPY requirements.txt /tmp/requirements.txt
 COPY app.py ./
+COPY infrastructure ./infrastructure
 
 EXPOSE 5000
 
