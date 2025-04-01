@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  redis:
+    image: "redis:latest"
+    expose:
+      - "6379:6379"
+    restart: always
+
+  application:
+    build: ./application
+    expose:
+      - "5000"
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+    restart: always
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8081:8081"
+    depends_on:
+      - application
+    restart: always
