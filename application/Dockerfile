@@ -6,6 +6,7 @@ WORKDIR /application
 COPY requirements.txt /tmp/requirements.txt
 COPY app.py ./
 COPY infrastructure ./infrastructure
+COPY domain ./domain
 
 EXPOSE 5000
 

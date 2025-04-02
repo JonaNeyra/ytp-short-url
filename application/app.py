@@ -1,6 +1,7 @@
 import redis
-from flask import Flask
+from flask import Flask, request, jsonify
 
+from domain import generate_short_code
 from infrastructure import RedisDb, UrlRedisHandler
 
 app = Flask(__name__)
@@ -16,6 +17,17 @@ def hello_world():
     except redis.ConnectionError as e:
         msg = f"❌ Error al conectar a Redis: {e}"
     return msg
+
+@app.route("/shorting_url", methods=["POST"])
+def shorting_url():
+    data = request.json
+    long_url = data.get("url")
+
+    if not long_url:
+        return jsonify({"error": "No URL provided"}), 400
+
+    short_code = generate_short_code(long_url)
+    return short_code
 
 
 if __name__ == '__main__':
