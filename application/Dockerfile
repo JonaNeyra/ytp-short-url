@@ -7,6 +7,7 @@ COPY requirements.txt /tmp/requirements.txt
 COPY app.py ./
 COPY infrastructure ./infrastructure
 COPY domain ./domain
+COPY app ./app
 
 EXPOSE 5000
 

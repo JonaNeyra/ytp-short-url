@@ -1,7 +1,7 @@
 import redis
 from flask import Flask, request, jsonify
 
-from domain import generate_short_code
+from app import UrlShortenerSrv
 from infrastructure import RedisDb, UrlRedisHandler
 
 app = Flask(__name__)
@@ -24,10 +24,12 @@ def shorting_url():
     long_url = data.get("url")
 
     if not long_url:
-        return jsonify({"error": "No URL provided"}), 400
+        return jsonify({"error": "No proporcionaste la URL"}), 400
 
-    short_code = generate_short_code(long_url)
-    return short_code
+    short_srv = UrlShortenerSrv(url_db_handler)
+    short_code = short_srv.save(long_url)
+
+    return jsonify({"short_url": f"http://localhost:8081/{short_code}"})
 
 
 if __name__ == '__main__':
